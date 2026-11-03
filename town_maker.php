@@ -351,7 +351,7 @@ function town_jouhou(...$_args)
 function command_botan(...$_args)
 {
     global $house_name, $work_seigen_time;
-    global $_, $botan_narabi_suu, $botanyou_kouka_check, $botanyou_mono_check, $condition, $deleteUser, $house_type,
+    global $_, $botan_narabi_suu, $botanyou_kouka_check, $botanyou_mono_check, $condition, $condition_name, $deleteUser, $house_type,
         $img_dir, $in, $job, $job_kaisuu, $job_keiken, $k_id, $kaigyou_flag, $love, $mono_kouka_keys,
         $mono_name_keys, $monokiroku_file, $my_kounyuu_list, $need_love, $renai_system_on, $script, $syo_hinmoku,
         $syo_kouka, $syo_taikyuu, $top_botan, $unit;
@@ -393,9 +393,9 @@ function command_botan(...$_args)
         $work_wait = (60 * n($work_seigen_time)) - (pl_time() - n($house_name));
         if ($work_wait > 0) {
             $wait_min = (int)ceil($work_wait / 60);
-            $top_botan .= $btn('basic.php', 'do_work', 'go_work.gif', "仕事<span class=\"tw-wait\" data-wait=\"{$work_wait}\">あと{$wait_min}分</span>", "仕事できる間隔は{$work_seigen_time}分です。あと{$wait_min}分お待ちください。", "<input type=\"hidden\" name=\"cond\" value=\"{$condition}\">", ' disabled class="tw-work"');
+            $top_botan .= $btn('basic.php', 'do_work', 'go_work.gif', "仕事<span class=\"tw-wait\" data-wait=\"{$work_wait}\">あと{$wait_min}分</span>", "仕事できる間隔は{$work_seigen_time}分です。あと{$wait_min}分お待ちください。", "<input type=\"hidden\" name=\"cond\" value=\"{$condition_name}\">", ' disabled class="tw-work"');
         } else {
-            $top_botan .= $btn('basic.php', 'do_work', 'go_work.gif', '仕事', "仕事に出かけます。現在、経験値：{$job_keiken}　勤務数：{$job_kaisuu}回", "<input type=\"hidden\" name=\"cond\" value=\"{$condition}\">");
+            $top_botan .= $btn('basic.php', 'do_work', 'go_work.gif', '仕事', "仕事に出かけます。現在、経験値：{$job_keiken}　勤務数：{$job_kaisuu}回", "<input type=\"hidden\" name=\"cond\" value=\"{$condition_name}\">");
         }
     }
     $top_botan .= $btn('basic.php', 'item', 'item.gif', 'アイテム', 'アイテムを使用します。');
@@ -436,7 +436,7 @@ function loged_gamen(...$_args)
 {
     global $BMI, $_, $access_byou, $all_couple, $ato_nanbyou, $bh_full_date, $bijutu, $byouki_sisuu, $byoumei,
         $cn_joutai, $cn_kodomo, $cn_name1, $cn_name2, $cn_number, $cn_omoide1, $cn_omoide2, $cn_omoide3, $cn_omoide4,
-        $cn_omoide5, $cn_total_aijou, $cn_yobi1, $cn_yobi2, $cn_yobi3, $cn_yobi4, $cn_yobi5, $condition,
+        $cn_omoide5, $cn_total_aijou, $cn_yobi1, $cn_yobi2, $cn_yobi3, $cn_yobi4, $cn_yobi5, $condition, $condition_name,
         $condition_sisuu, $couple_file, $deleteUser, $eigo, $ener_parcent, $energy, $energy_bar, $energy_max, $etti,
         $get_host, $happend_ivent, $host, $img_dir, $in, $job, $job_kaisuu, $job_keiken, $job_level, $k_id,
         $k_sousisan, $k_temp, $kenkou, $kokugo, $koudou_seigen, $is_reload, $kuuhukudo, $kyakuryoku, $lastCheckTime,
@@ -621,6 +621,8 @@ function loged_gamen(...$_args)
     } else {
         $byoumei = '';
     }
+    // 仕事ボタンに渡す体調名（HTML を含めない）
+    $condition_name = $byoumei ?: $condition;
     if ($byoumei) {
         $condition = "<span style=\"color:#ff6600\">{$byoumei}</span>";
     }

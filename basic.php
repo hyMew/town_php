@@ -2538,22 +2538,23 @@ function do_work(...$_args)
         $nou_energy = 0;
     }
     $mae_job_level = pl_int((n($job_keiken) / 100));
-    // 経験値をプラス
-    if (($in['cond'] == '最高')) {
+    // 経験値をプラス（体調名。旧形式の色付き HTML で送られてきても名前だけを取り出す）
+    $cond = trim(strip_tags(html_entity_decode((string)$in['cond'], ENT_QUOTES | ENT_HTML5, 'UTF-8')));
+    if (($cond == '最高')) {
         $randed = '15';
-    } elseif (($in['cond'] == '良好')) {
+    } elseif (($cond == '良好')) {
         $randed = '10';
-    } elseif (($in['cond'] == '普通')) {
+    } elseif (($cond == '普通')) {
         $randed = '5';
-    } elseif (($in['cond'] == '不良')) {
+    } elseif (($cond == '不良')) {
         $randed = '1';
-    } elseif (($in['cond'] == '悪い')) {
+    } elseif (($cond == '悪い')) {
         $randed = '-5';
-    } elseif (($in['cond'] == '<span style="color:#ff6600">風邪ぎみ</span>')) {
+    } elseif (($cond == '風邪ぎみ')) {
         $randed = '-8';
-    } elseif (($in['cond'] == '<span style="color:#ff6600">風邪</span>')) {
+    } elseif (($cond == '風邪')) {
         $randed = '-14';
-    } elseif (($in['cond'] == '<span style="color:#ff6600">肺炎</span>')) {
+    } elseif (($cond == '肺炎')) {
         $randed = '-20';
     } else {
         error('その体では仕事できません！');
