@@ -1,0 +1,11 @@
+# 町CGI PHP版 — Apache 用のアクセス制限
+# データ・ライブラリ・ツールを Web から直接読めないようにします
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(data|lib|tools)(/|$) - [F,L]
+    RewriteRule ^town_ini_local\.php$ - [F,L]
+</IfModule>
+<FilesMatch "\.(cgi|dat|sqlite|sqlite-wal|sqlite-shm|lock)$">
+    Require all denied
+</FilesMatch>
+Options -Indexes

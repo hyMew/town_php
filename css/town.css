@@ -1,0 +1,299 @@
+/* =========================================================
+   町CGI PHP版 — スマホ対応スタイル
+   画像（GIF）は元のまま使い、レイアウトと部品の見た目だけを整える。
+   ========================================================= */
+
+:root {
+  --tw-ground: #F3F6EF;
+  --tw-card: #FFFFFF;
+  --tw-ink: #1E2823;
+  --tw-muted: #55635A;
+  --tw-line: #DDE4D8;
+  --tw-accent: #2F8F5B;
+  --tw-accent-ink: #FFFFFF;
+  --tw-accent-dark: #1E5A3A;
+  --tw-blue: #2B6CB0;
+  --tw-warn: #A33A12;
+  --tw-warn-bg: #FCEBDD;
+  --tw-radius: 14px;
+  --tw-font: "Hiragino Maru Gothic ProN", "Hiragino Sans", "BIZ UDPGothic", "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
+}
+
+/* ---------- 基本 ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0 !important;
+  padding: 12px;
+  font-family: var(--tw-font);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--tw-ink);
+  background-color: var(--tw-ground);
+}
+body, table { font-size: 14px; }
+img { image-rendering: pixelated; image-rendering: crisp-edges; vertical-align: middle; max-width: 100%; height: auto; }
+a { color: var(--tw-accent-dark); }
+hr { border: 0; border-top: 1px solid var(--tw-line); margin: 16px 0; }
+
+/* 元のクラス（town_ini の $town_stylesheet）を読みやすい大きさに */
+.dai { font-size: 18px; font-weight: 700; }
+.tyuu { font-size: 14px; font-weight: 700; color: #C2571A; }
+.honbun, .honbun2, .honbun3, .honbun5, .job_messe, .message { font-size: 13px; line-height: 1.6; }
+.honbun4 { font-size: 14px; line-height: 1.7; }
+.small { font-size: 12px; color: var(--tw-muted); }
+.midasi { font-size: 20px; font-weight: 800; color: var(--tw-ink); }
+
+/* ---------- フォーム部品 ---------- */
+input[type=text], input[type=password], input[type=number], input:not([type]), select, textarea {
+  font: inherit;
+  font-size: 16px;            /* iOS の自動ズーム防止 */
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1.5px solid #C9D3C4;
+  border-radius: 10px;
+  background: #FFFFFF;
+  color: var(--tw-ink);
+  max-width: 100%;
+}
+textarea { min-height: 96px; width: 100%; }
+input[type=text][size], input[type=password][size] { width: auto; }
+input[type=submit], input[type=button], input[type=reset], button {
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  min-height: 44px;
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--tw-accent);
+  color: var(--tw-accent-ink);
+  cursor: pointer;
+  box-shadow: 0 2px 0 var(--tw-accent-dark);
+  margin: 2px;
+}
+input[type=submit]:active, button:active { transform: translateY(1px); box-shadow: 0 1px 0 var(--tw-accent-dark); }
+input[type=radio], input[type=checkbox] { width: 20px; height: 20px; vertical-align: middle; accent-color: var(--tw-accent); }
+input[type=image] { vertical-align: middle; }
+label { cursor: pointer; }
+
+/* ---------- 汎用の表（施設の画面など） ---------- */
+table { max-width: 100%; border-collapse: separate; }
+.yosumi {
+  border: 0 !important;
+  background: var(--tw-card) !important;
+  border-radius: var(--tw-radius);
+  box-shadow: 0 1px 0 var(--tw-line), 0 0 0 1px var(--tw-line);
+}
+/* 列の多い表（商品一覧など）は横スクロール */
+table:has(> tbody > tr > :nth-child(6)),
+table:has(> tr > :nth-child(6)) {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: auto !important;
+}
+
+/* ---------- 共通ダイアログ（メッセージ・エラー） ---------- */
+.tw-dialog {
+  max-width: 440px;
+  margin: 32px auto;
+  padding: 24px 20px;
+  background: var(--tw-card);
+  border-radius: 18px;
+  box-shadow: 0 1px 0 var(--tw-line), 0 0 0 1px var(--tw-line);
+  text-align: center;
+}
+.tw-dialog-title { margin: 0 0 12px; font-size: 18px; font-weight: 800; color: var(--tw-warn); }
+.tw-dialog-body { font-size: 15px; line-height: 1.7; text-align: left; }
+.tw-dialog form { margin-top: 18px; }
+.tw-back { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; margin-top: 16px; border-radius: 12px; border: 1.5px solid #C9D3C4; background: #FFFFFF; color: var(--tw-ink); text-decoration: none; font-weight: 700; }
+
+.tw-footer { margin: 24px 0 8px; text-align: center; font-size: 12px; color: var(--tw-muted); }
+.tw-footer a { color: var(--tw-muted); }
+.tw-footer form { margin-bottom: 12px; }
+
+/* ---------- 街の画面 ---------- */
+.tw-layout { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start; max-width: 1200px; margin: 0 auto; }
+.tw-map-col { flex: 0 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.tw-side-col { flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 12px; }
+.tw-map-stick { display: flex; flex-direction: column; gap: 10px; }
+
+/* PC幅: 地図の列をスクロールに追従させる（列の高さが画面より高いときは列の中でスクロール） */
+@media (min-width: 960px) {
+  .tw-side-col { flex-basis: 300px; }
+  .tw-map-col { align-self: stretch; }
+  .tw-map-stick {
+    position: sticky; top: 12px;
+    max-height: calc(100vh - 24px); overflow-y: auto;
+    scrollbar-width: thin;
+    margin: -4px; padding: 4px;   /* カードの影が切れないように */
+  }
+}
+
+.tw-help { margin: 0; }
+.tw-help input {
+  width: 100%; min-height: 36px; font-size: 13px; padding: 6px 12px;
+  border: 0; border-radius: 10px; background: #E3EADF; color: var(--tw-ink);
+}
+
+.tw-map-scroll {
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--tw-radius);
+  box-shadow: 0 0 0 1px var(--tw-line);
+  max-width: 100%;
+}
+.tw-map { border-collapse: collapse; margin: 0; }
+.tw-map td { padding: 0; line-height: 0; width: 32px; height: 32px; }
+.tw-map td img, .tw-map td input[type=image] { width: 32px; height: 32px; display: block; }
+.tw-map tr:first-child td { line-height: 1.2; font-size: 11px; height: 18px; }
+.tw-map td.sita, .tw-map tr:first-child td:first-child { line-height: 1.2; font-size: 11px; width: 18px; min-width: 18px; text-align: center; }
+.tw-map tr:first-child td { text-align: center; }
+.tw-map form { display: contents; margin: 0; }
+
+.tw-card {
+  background: var(--tw-card);
+  border-radius: var(--tw-radius);
+  box-shadow: 0 1px 0 var(--tw-line), 0 0 0 1px var(--tw-line);
+  padding: 14px 16px;
+}
+.tw-card-title { margin: 0 0 8px; font-size: 15px; font-weight: 800; }
+
+.tw-townhead { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tw-townhead .tw-townname { display: flex; flex-direction: column; }
+.tw-townhead .tw-townname small { font-size: 12px; color: var(--tw-muted); }
+.tw-townhead .tw-townname strong { font-size: 20px; font-weight: 800; }
+.tw-stats { display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--tw-muted); }
+.tw-stats b { color: var(--tw-ink); }
+
+.tw-aisatu { font-size: 13px; line-height: 1.7; }
+.tw-guests { font-size: 13px; color: var(--tw-muted); }
+
+/* コマンドボタン（アイコン + 名前） */
+.tw-cmds { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 8px; }
+.tw-cmds form { margin: 0; }
+.tw-cmds button {
+  width: 100%; min-height: 64px; margin: 0; padding: 8px 4px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  background: #F6F8F3; color: var(--tw-ink); border: 1px solid var(--tw-line); border-radius: 12px;
+  box-shadow: 0 2px 0 var(--tw-line); font-size: 12px; font-weight: 700;
+}
+.tw-cmds button img { width: 32px; height: 32px; }
+.tw-cmds button:disabled { opacity: .55; cursor: not-allowed; box-shadow: none; transform: none; }
+.tw-cmds button:disabled img { filter: grayscale(1); }
+.tw-wait { display: block; font-size: 11px; font-weight: 400; color: var(--tw-warn); }
+.tw-cmds button.tw-wide img { width: 100px; height: 10px; }
+
+.tw-notice { background: var(--tw-warn-bg); color: #7A2C0B; border-radius: 10px; padding: 8px 12px; font-size: 13px; }
+.tw-notice:empty { display: none; }
+.tw-notice input[name=cdown] { min-height: 0; width: 3.5em; padding: 0 4px; border: 0; background: transparent; color: var(--tw-warn); font-weight: 800; font-size: 14px; }
+
+/* ステータス */
+.tw-status { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 6px 12px; margin: 0; font-size: 14px; }
+.tw-status dt { color: var(--tw-blue); font-weight: 700; white-space: nowrap; }
+.tw-status dd { margin: 0; }
+.tw-power { display: flex; flex-direction: column; gap: 4px; }
+.tw-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: #E6ECE2; }
+.tw-bar img { height: 10px; display: block; image-rendering: auto; }
+.tw-sub { font-size: 12px; color: var(--tw-muted); }
+
+/* 能力値 */
+.tw-params { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.tw-params h3 { margin: 0 0 6px; font-size: 13px; font-weight: 800; color: #C2571A; }
+.tw-param { display: grid; grid-template-columns: 5.5em minmax(0, 1fr) 3.5em; gap: 8px; align-items: center; min-height: 26px; font-size: 13px; }
+.tw-param .tw-pbar { height: 8px; background: #E6ECE2; border-radius: 4px; overflow: hidden; }
+.tw-param .tw-pbar span { display: block; height: 8px; background: #F2B705; border-radius: 4px; max-width: 100%; }
+.tw-param b { text-align: right; }
+
+/* トップ画面 */
+.tw-top-title { margin: 0; font-size: 26px; font-weight: 800; text-align: center; }
+.tw-field { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+.tw-field label, .tw-field > span { font-size: 13px; font-weight: 700; color: var(--tw-muted); }
+.tw-field input[type=text], .tw-field input[type=password] { width: 100%; }
+.tw-choice { display: flex; gap: 16px; flex-wrap: wrap; font-size: 14px; }
+.tw-choice label { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; }
+.tw-submit { width: 100%; margin: 4px 0 0; }
+.tw-admin { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.tw-admin input[type=password] { flex: 1 1 140px; }
+.tw-osirase { font-size: 13px; }
+
+/* ---------- スマホ幅 ---------- */
+@media (max-width: 720px) {
+  body { padding: 8px; }
+
+  /* 固定幅の表は画面幅に合わせる */
+  table[width]:not(.tw-map) { width: 100% !important; }
+  table:not(.tw-map) td[width] { width: auto !important; }
+
+  /* 説明文 + タイトル画像の2段組など、列の少ない枠は縦に積む */
+  table.yosumi:not(:has(tr > :nth-child(5))) > tbody > tr > td,
+  table.yosumi:not(:has(tr > :nth-child(5))) > tr > td {
+    display: block;
+    width: auto !important;
+  }
+
+  input[type=text][size], input[type=password][size] { max-width: 100%; }
+  .tw-layout { gap: 12px; }
+  .tw-map-col, .tw-side-col { flex-basis: 100%; }
+  .tw-params { grid-template-columns: minmax(0, 1fr); }
+  .tw-guest .tw-side-col { order: -1; }   /* トップ画面ではログイン欄を先に */
+
+  /* ログイン後の街の画面: コマンドを地図より上に表示する
+     （右列の中身を一段上の並びに出して、コマンドだけ先頭へ） */
+  .tw-layout:not(.tw-guest) > .tw-side-col { display: contents; }
+  .tw-layout:not(.tw-guest) > .tw-side-col > * { flex: 1 1 100%; min-width: 0; }
+  .tw-layout:not(.tw-guest) > .tw-side-col > .tw-cmd-card { order: -1; }
+
+  /* 施設画面の「内容 ｜ ステータス」の2段組は縦に積む */
+  table:has(section.tw-card),
+  table:has(section.tw-card) > tbody,
+  table:has(section.tw-card) > tbody > tr,
+  table:has(section.tw-card) > tbody > tr > td {
+    display: block;
+    width: 100% !important;
+  }
+  table:has(section.tw-card) > tbody > tr > td { padding: 0 0 12px !important; }
+  section.tw-card { margin-bottom: 12px; }
+}
+
+/* 使用間隔が空いていないときの表示 */
+input[type=submit]:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+.tw-item-wait { display: inline-block; margin-left: 6px; }
+
+/* 横スクロールする表の中の「全幅の行」（凡例・OK ボタンなど）は画面内に留める */
+table:has(> tbody > tr > :nth-child(6)) td[colspan] > *,
+table:has(> tr > :nth-child(6)) td[colspan] > * {
+  position: sticky;
+  left: 8px;
+  max-width: calc(100vw - 48px);
+}
+table:has(> tbody > tr > :nth-child(6)) td[colspan] > font,
+table:has(> tr > :nth-child(6)) td[colspan] > font { display: block; }
+
+/* 「戻る」ボタン */
+.tw-backform { display: inline-block; margin: 12px 0 0; }
+input.tw-back, button.tw-back { background: #FFFFFF; color: var(--tw-ink); border: 1.5px solid #C9D3C4; box-shadow: none; }
+
+/* ---------- 開閉できる枠（アコーディオン） ---------- */
+details.tw-fold > summary.tw-fold-title {
+  list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 44px; margin: -14px -16px; padding: 10px 16px;
+  font-size: 15px; font-weight: 800; cursor: pointer; user-select: none;
+  border-radius: var(--tw-radius);
+}
+details.tw-fold > summary.tw-fold-title::-webkit-details-marker { display: none; }
+details.tw-fold > summary.tw-fold-title::after {
+  content: ""; flex: none; width: 9px; height: 9px;
+  border-right: 2.5px solid var(--tw-muted); border-bottom: 2.5px solid var(--tw-muted);
+  transform: rotate(45deg) translate(-2px, -2px); transition: transform .15s;
+}
+details.tw-fold[open] > summary.tw-fold-title { margin-bottom: 8px; }
+details.tw-fold:not([open]) > summary.tw-fold-title::after { transform: rotate(-45deg); }
+details.tw-fold > summary.tw-fold-title:hover { background: #F6F8F3; }
+details.tw-fold > summary.tw-fold-title:focus-visible { outline: 2px solid var(--tw-accent); outline-offset: 2px; }
+details.tw-fold-map[open] > summary.tw-fold-title { margin-bottom: 10px; }
+details.tw-fold-map .tw-help { margin-bottom: 8px; }
+details.tw-townhead { display: block; }
+details.tw-townhead > summary .tw-townname { display: flex; flex-direction: column; font-weight: 400; }
